@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="./signup.css" />
+    <link href="https://fonts.cdnfonts.com/css/bernoru" rel="stylesheet">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="nav-left">
+            <img src="/images/logo.png" alt="Navbud logo" class="nav-logo" />
+            <span class="nav-title">NAVBUD</span>
+        </div>
+        <div class="nav-right">
+            <button type="button" id="signupClose" class="signup-close">&times;</button>
+        </div>
+    </header>
+    <div class="controls">
+        <div class="status" id="msg" style="margin-bottom: 10px;"></div>
+        <div class="input-wrapper">
+            <input id="email" type="email" placeholder="Enter Email:" autocomplete="email" />
+        </div>
+        <div class="input-wrapper">
+            <input id="password" type="password" placeholder="Enter Password:" autocomplete="new-password" />
+        </div>
+        <a class="nav-signup-btn" href="#" id="btn">Sign Up</a>
+    </div>
+
+    <script type="module" src="./signup.js"></script>
+</body>
+
+</html>

@@ -24,7 +24,7 @@
       <span class="nav-title">NAVBUD</span>
     </div>
     <div class="nav-right">
-      <!-- <a href="/login" class="nav-login-btn">Log in</a> -->
+      <a href="/login/" class="nav-login-btn" id="navAuthBtn">Log in</a>
     </div>
   </header>
   <div class="controls">
@@ -68,6 +68,11 @@
   
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Cognito JS -->
+  <script type="module">
+    import { attachNavButton } from "./auth-client.js";
+    attachNavButton("navAuthBtn");
+  </script>  
   <!-- Javascript file -->
   <script src="script.js"></script>
 </body>

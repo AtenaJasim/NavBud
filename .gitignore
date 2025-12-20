@@ -1,0 +1,3 @@
+aws_cognito_local/node_modules/
+aws_cognito_local/.cognito/
+aws_cognito_local/local-config.json

@@ -1,0 +1,145 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 150px;
+    background: #00aee5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1100;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-logo {
+    height: 150px;
+    width: auto;
+}
+
+.nav-title {
+    font-family: 'Bernoru', sans-serif;
+    font-size: 90px;
+    font-weight: 600;
+    color: white;
+}
+
+
+.nav-signup-btn {
+    font-family: 'Bernoru', sans-serif;
+    font-size: 15px;
+    padding: 25px 10px;
+    border-radius: 35px;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #7ed957;
+}
+
+.nav-signup-btn:hover {
+    background-color: #07953d;
+}
+
+
+.controls {
+    position: fixed;
+    top: calc(50% + 35px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 300px;
+    width: 700px;
+    z-index: 1500;
+    background: #00aee5;
+    padding: 8px 10px 40px;
+    font-family: sans-serif;
+    font-size: 13px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+.controls input {
+    width: 100%;
+    margin-bottom: 4px;
+    box-sizing: border-box;
+}
+
+.nav-signup-btn {
+    font-family: sans-serif;
+    position: fixed;
+    top: calc(50% + 120px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 25px;
+    padding: 8px 17px;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #7ed957;
+}
+
+.nav-signup-btn:hover {
+    background-color: #07953d;
+}
+
+.signup-close {
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 55px;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.signup-close:hover {
+    color: #e50000;
+}
+
+.status {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-top: 4px;
+    font-size: 20px;
+    color: #fdfbfb;
+}
+
+.input-wrapper {
+    border: 2px solid #000;
+    position: relative;
+    position: relative;
+    top: 30px;
+    display: flex;
+    align-items: center;
+    background: #7ed957;
+    padding: 15px 20px;
+    margin-top: 18px;
+}
+
+.input-wrapper input {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white;
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 20px;
+    padding: 6px 2px;
+    background: transparent;
+    box-sizing: border-box;
+}
+
+.input-wrapper input::placeholder {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 22px;
+    color: white;
+    text-align: center;
+}
