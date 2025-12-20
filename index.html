@@ -1,59 +1,62 @@
 <!doctype html>
 <html>
+
 <head>
   <meta charset="utf-8" />
   <title>Unprotected Left Turn Finder</title>
 
   <!-- Leaflet CSS -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link href="https://fonts.cdnfonts.com/css/bernoru" rel="stylesheet">
   <!-- Stylesheet -->
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <header class="navbar">
     <div class="nav-left">
-      <img
-        src="images/logo.png"
-        alt="Navbud logo"
-        class="nav-logo"
-      />
+      <img src="/web/images/logo.png" alt="Navbud logo" class="nav-logo" />
       <span class="nav-title">NAVBUD</span>
     </div>
     <div class="nav-right">
       <!-- <a href="/login" class="nav-login-btn">Log in</a> -->
     </div>
   </header>
-  <div class="controls">
-    <form id="routeForm">
-      <label>
-        <div class="input-wrapper">
-          <img src="images/start-icon.png" alt="" class="input-icon" />
-        <input
-          type="text"
-          id="startText"
-          placeholder="Starting Point"
-        />
+  <div id="leftDock" class="left-dock">
+    <div class="controls">
+      <form id="routeForm">
+        <label>
+          <div class="input-wrapper">
+            <img src="/web/images/start-icon.png" alt="" class="input-icon" />
+            <input type="text" id="startText" placeholder="Starting Point" />
+          </div>
+        </label>
+
+        <label>
+          <div class="input-wrapper">
+            <img src="/web/images/end-icon.png" alt="" class="input-icon" />
+            <input type="text" id="endText" placeholder="Destination" />
+          </div>
+        </label>
+      </form>
+
+      <div id="status" class="status"></div>
+
+      <button type="button" id="historyButton" class="history-button">
+        <img src="/web/images/history-icon.png" alt="Show history" />
+      </button>
+    </div>
+
+    <section id="routePanel" class="route-panel" aria-label="Route steps">
+      <div class="route-summary">
+        <div class="route-time-row">
+          <span class="route-time-label">Time</span>
+          <span id="routeTime" class="route-time-value"></span>
         </div>
-      </label>
-      <label>
-        <div class="input-wrapper">
-          <img src="images/end-icon.png" alt="" class="input-icon" />
-        <input
-          type="text"
-          id="endText"
-          placeholder="Destination"
-        />
-        </div>
-      </label>
-    </form>
-    <div id="status" class="status"></div>
-    <button type="button" id="historyButton" class="history-button">
-      <img src="images/history-icon.png" alt="Show history" />
-    </button>
+      </div>
+
+      <ol id="routeSteps" class="route-steps"></ol>
+    </section>
   </div>
   <aside id="historySidebar" class="sidebar">
     <button type="button" id="sidebarClose" class="sidebar-close">
@@ -65,10 +68,11 @@
   </aside>
   <div id="map"></div>
 
-  
+
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <!-- Javascript file -->
   <script src="script.js"></script>
 </body>
+
 </html>

@@ -13,6 +13,80 @@ const leftLayer = L.layerGroup().addTo(map);
 
 const statusEl = document.getElementById('status');
 
+const routePanel = document.getElementById('routePanel');
+const routeStepsEl = document.getElementById('routeSteps');
+const routeTimeEl = document.getElementById('routeTime');
+
+function openRouteUI() {
+  document.body.classList.add('show-route');
+  if (routePanel) routePanel.classList.add('visible');
+
+  // Leaflet needs this after the map container width changes
+  setTimeout(() => {
+    map.invalidateSize();
+  }, 200);
+}
+
+function formatDuration(seconds) {
+  if (!Number.isFinite(seconds)) return '';
+  const minsTotal = Math.round(seconds / 60);
+  const hrs = Math.floor(minsTotal / 60);
+  const mins = minsTotal % 60;
+
+  if (hrs <= 0) return `${mins} min`;
+  if (mins === 0) return `${hrs} hr`;
+  return `${hrs} hr ${mins} min`;
+}
+
+function formatStepText(step) {
+  const name = (step && step.name) ? step.name : 'road';
+  const m = step.maneuver || {};
+  const type = String(m.type || '');
+  const mod = String(m.modifier || '');
+
+  if (type === 'depart') return `Start on ${name}`;
+  if (type === 'arrive') return 'Arrive at destination';
+  if (type === 'turn') return `Turn ${mod || ''} onto ${name}`.replace(/\s+/g, ' ').trim();
+  if (type === 'continue') return `Continue on ${name}`;
+  if (type === 'merge') return `Merge ${mod || ''} onto ${name}`.replace(/\s+/g, ' ').trim();
+  if (type === 'roundabout') return `Enter roundabout toward ${name}`;
+  if (type === 'fork') return `Keep ${mod || ''} to stay on ${name}`.replace(/\s+/g, ' ').trim();
+  if (type === 'new name') return `Continue onto ${name}`;
+  if (type === 'end of road') return `At the end of the road, turn ${mod || ''} onto ${name}`.replace(/\s+/g, ' ').trim();
+
+
+  return `${type} ${mod} ${name}`.replace(/\s+/g, ' ').trim();
+}
+
+function renderRouteSteps(route, unprotectedIdxSet) {
+  if (!routeStepsEl || !routeTimeEl) return;
+
+  routeTimeEl.textContent = formatDuration(route.duration);
+
+  routeStepsEl.innerHTML = '';
+  const steps = route.legs.flatMap((l) => l.steps);
+
+  steps.forEach((step, idx) => {
+    const li = document.createElement('li');
+
+    if (unprotectedIdxSet && unprotectedIdxSet.has(idx)) {
+      const street = step.name || 'road';
+
+      const red = document.createElement('span');
+      red.className = 'unprotected-left';
+      red.textContent = 'Unprotected left';
+
+      li.appendChild(red);
+      li.appendChild(document.createTextNode(` onto ${street}`));
+    } else {
+      li.textContent = formatStepText(step);
+    }
+
+    routeStepsEl.appendChild(li);
+  });
+}
+
+
 function setStatus(msg) {
   if (statusEl) statusEl.textContent = msg || '';
 }
@@ -114,46 +188,45 @@ async function highlightUnprotectedLefts(route) {
   const steps = route.legs.flatMap((l) => l.steps);
 
   const leftTurns = [];
-  let south = 90,
-    north = -90,
-    west = 180,
-    east = -180;
+  const unprotectedIdxSet = new Set();
 
-  for (const step of steps) {
+  let south = 90, north = -90, west = 180, east = -180;
+
+  steps.forEach((step, idx) => {
     const maneuver = step.maneuver || {};
     const type = maneuver.type;
     const modifier = String(maneuver.modifier || '');
 
     const isLeftTurn = type === 'turn' && modifier.includes('left');
-    if (!isLeftTurn) continue;
+    if (!isLeftTurn) return;
+
     const inter = step.intersections && step.intersections[0];
     const loc = (inter && inter.location) || maneuver.location;
-    if (!loc) continue;
+    if (!loc) return;
 
     const [lon, lat] = loc;
     const pt = { lat, lon };
 
     leftTurns.push({
+      idx,
       point: pt,
       name: step.name || 'road'
     });
 
-    // Expand bbox around all left turns
     south = Math.min(south, lat);
     north = Math.max(north, lat);
     west = Math.min(west, lon);
     east = Math.max(east, lon);
-  }
+  });
 
   if (!leftTurns.length) {
     console.log('No left turns found on this route');
-    return;
+    return unprotectedIdxSet;
   }
 
   const pad = 0.001;
   const bbox = [south - pad, west - pad, north + pad, east + pad];
 
-  // Get traffic signal data from OSM
   let signals = [];
   try {
     signals = await fetchTrafficSignals(bbox);
@@ -163,7 +236,7 @@ async function highlightUnprotectedLefts(route) {
 
   const SIGNAL_RADIUS_M = 30;
 
-  for (const { point, name } of leftTurns) {
+  for (const { idx, point, name } of leftTurns) {
     let protectedTurn = false;
 
     if (signals.length) {
@@ -175,8 +248,9 @@ async function highlightUnprotectedLefts(route) {
       protectedTurn = minDist < SIGNAL_RADIUS_M;
     }
 
-    // Only show unprotected left turns
     if (protectedTurn) continue;
+
+    unprotectedIdxSet.add(idx);
 
     const marker = L.circleMarker([point.lat, point.lon], {
       radius: 6,
@@ -185,7 +259,10 @@ async function highlightUnprotectedLefts(route) {
 
     leftLayer.addLayer(marker);
   }
+
+  return unprotectedIdxSet;
 }
+
 
 async function buildRoute(startPlace, endPlace) {
   // Clear old route and markers
@@ -220,9 +297,13 @@ async function buildRoute(startPlace, endPlace) {
   map.fitBounds(routeLayer.getBounds());
 
   setStatus('Finding unprotected left turns...');
-  await highlightUnprotectedLefts(route);
+  const unprotectedIdxSet = await highlightUnprotectedLefts(route);
+
+  // Show time + steps under the controls
+  renderRouteSteps(route, unprotectedIdxSet);
 
   setStatus('Done!');
+
 }
 
 const historyButton = document.getElementById('historyButton');
@@ -258,9 +339,10 @@ function renderHistory() {
     li.addEventListener('click', async () => {
       closeHistorySidebar();
 
-      // Put the values back into the inputs
       startInput.value = item.startText;
       endInput.value = item.endText;
+
+      openRouteUI();
 
       setStatus('');
       try {
@@ -276,6 +358,7 @@ function renderHistory() {
     historyList.appendChild(li);
   });
 }
+
 
 function addRouteToHistory(startText, endText, startPlace, endPlace) {
   const key = `${startText}||${endText}`;
@@ -349,8 +432,12 @@ if (routeForm) {
       return;
     }
 
+    // Expand left side as soon as Enter triggers submit
+    openRouteUI();
+
     try {
       setStatus('Finding locations...');
+
       const [startPlace, endPlace] = await Promise.all([
         geocode(startText),
         geocode(endText)

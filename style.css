@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -6,6 +7,7 @@ html, body {
 
 #map {
   height: 100vh;
+  z-index: 1;
 }
 
 .navbar {
@@ -20,7 +22,7 @@ html, body {
   justify-content: space-between;
   padding: 0 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 1100;
+  z-index: 6;
 }
 
 .nav-left {
@@ -58,20 +60,19 @@ html, body {
 
 
 .controls {
-  position: absolute;
-  height: 130px;
-  width: 380px;
-  top: 82px;
-  left: 10px;
-  z-index: 1500;
+  position: relative;
+  height: 180px;
+  width: 100%;
+  z-index: 5;
   background: #00aee5;
-  padding: 8px 10px 40px;
+  padding: 8px 10px 55px;
   border-radius: 15px;
   font-family: sans-serif;
   font-size: 13px;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-  max-width: 260px;
+  box-sizing: border-box;
 }
+
 
 .controls label {
   display: block;
@@ -108,8 +109,8 @@ html, body {
 }
 
 .input-wrapper input {
-  font-family:Verdana, Geneva, Tahoma, sans-serif;
-  color:white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: white;
   border: none;
   outline: none;
   width: 100%;
@@ -120,19 +121,20 @@ html, body {
 }
 
 .input-wrapper input::placeholder {
-  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 15px;
   color: white;
 }
 
 .history-button {
   position: absolute;
-  bottom: 6px;
+  bottom: 2px;
   left: 50%;
   transform: translateX(-50%);
   border: none;
   background: transparent;
   cursor: pointer;
+  z-index: 5;
 }
 
 .history-button img {
@@ -148,7 +150,7 @@ html, body {
   height: calc(100vh - 70px);
   background: rgb(24, 171, 239);
   box-shadow: 2px 0 6px rgba(0, 0, 0, 0.2);
-  z-index: 2000;
+  z-index: 7;
   padding: 12px;
   box-sizing: border-box;
   transition: left 0.25s ease-in-out;
@@ -202,3 +204,99 @@ html, body {
   color: #e50000;
 }
 
+.left-dock {
+  position: absolute;
+  top: 82px;
+  left: 10px;
+  z-index: 5;
+  width: 260px;
+}
+
+.route-panel {
+  display: none;
+  margin-top: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 15px;
+  padding: 10px;
+  box-sizing: border-box;
+  color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+.route-panel.visible {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.route-summary {
+  margin-bottom: 8px;
+}
+
+.route-time-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.route-time-label {
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.route-time-value {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.route-steps {
+  margin: 0;
+  padding-left: 0px;
+  list-style-position: inside;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+.route-steps li {
+  margin-bottom: 8px;
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+.unprotected-left {
+  color: #ff2d2d;
+  font-weight: 800;
+}
+
+body.show-route {
+  overflow: hidden;
+}
+
+body.show-route .left-dock {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  bottom: 0;
+  height: calc(100vh - 70px);
+  width: 320px;
+  background: #00aee5;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+body.show-route .controls {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+
+body.show-route #map {
+  margin-left: 320px;
+  width: calc(100vw - 320px);
+}
