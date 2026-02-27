@@ -6,29 +6,50 @@
     <title>Log in</title>
     <link rel="stylesheet" href="./login.css" />
     <link href="https://fonts.cdnfonts.com/css/bernoru" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <header class="navbar">
-        <div class="nav-left">
-            <img src="/images/logo.png" alt="Navbud logo" class="nav-logo" />
-            <span class="nav-title">NAVBUD</span>
-        </div>
-        <div class="nav-right">
-            <a href="/signup/" class="nav-signup-btn" id="navSignupBtn">Sign Up</a>
-        </div>
-    </header>
-    <div class="controls">
-        <button type="button" id="loginClose" class="login-close">&times;</button>
-        <div class="status" id="msg" style="margin-bottom: 10px;"></div>
-        <div class="input-wrapper">
-            <input id="username" placeholder="Enter Email:" autocomplete="username" />
-        </div>
-        <div class="input-wrapper">
-            <input id="password" type="password" placeholder="Enter Password:" autocomplete="current-password" />
-        </div>
-        <a class="nav-login-btn" href="#" id="btn">Log in</a>
-    </div>
+    <main class="split">
+
+        <!-- Left half  -->
+        <section class="panel blue">
+            <div class="panel-top">
+                <button type="button" id="loginClose" class="corner-btn-left">×</button>
+            </div>
+
+            <div class="panel-center">
+                <img src="/images/logo.png" alt="Navbud logo" class="brand-logo" />
+                <div class="brand-title">NAVBUD</div>
+                <div class="brand-tagline">Your personal <br> Navigation Buddy!</div>
+            </div>
+        </section>
+
+        <!-- Right half -->
+        <section class="panel green">
+            <div class="panel-top">
+                <a class="corner-btn-right" href="/signup/" id="navSignupBtn">Sign Up</a>
+            </div>
+
+            <div class="panel-center">
+                <div class="status" id="msg"></div>
+
+                <div class="form">
+                    <div class="input-wrapper">
+                        <input id="username" placeholder="Enter Email:" autocomplete="username" />
+                    </div>
+
+                    <div class="input-wrapper">
+                        <input id="password" type="password" placeholder="Enter Password:"
+                            autocomplete="current-password" />
+                    </div>
+
+                    <button class="login-btn" id="btn" type="button">Log in</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
 
     <script type="module" src="./login.js"></script>
 </body>

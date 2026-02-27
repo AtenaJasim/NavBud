@@ -3,35 +3,34 @@ import { login } from "../auth-client.js";
 const msg = document.getElementById("msg");
 const btn = document.getElementById("btn");
 const closeBtn = document.getElementById("loginClose");
-const createLink = document.getElementById("createLink");
+const signupBtn = document.getElementById("navSignupBtn");
 
 const urlParams = new URLSearchParams(window.location.search);
 const returnTo = urlParams.get("return") || "/index.html";
 
-if (createLink) {
-    createLink.href = "/signup/?return=" + encodeURIComponent(returnTo);
-}
-
 function goBack() {
-    window.location.href = returnTo;
+  window.location.href = returnTo;
 }
 
 if (closeBtn) {
-    closeBtn.addEventListener("click", goBack);
+  closeBtn.addEventListener("click", goBack);
 }
 
-btn.addEventListener("click", async (e) => {
-    e.preventDefault();
-    msg.textContent = "";
+if (signupBtn) {
+  signupBtn.href = "/signup/?return=" + encodeURIComponent(returnTo);
+}
 
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value;
+btn.addEventListener("click", async () => {
+  msg.textContent = "";
 
-    try {
-        msg.textContent = "Signing in...";
-        await login(username, password);
-        window.location.href = returnTo;
-    } catch (err) {
-        msg.textContent = err.message || "Login failed";
-    }
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value;
+
+  try {
+    msg.textContent = "Signing in...";
+    await login(username, password);
+    window.location.href = returnTo;
+  } catch (err) {
+    msg.textContent = err.message || "Login failed";
+  }
 });

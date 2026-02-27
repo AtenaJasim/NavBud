@@ -5,141 +5,148 @@ body {
     height: 100%;
 }
 
-.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 150px;
-    background: #00aee5;
+.split {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.panel {
+    position: relative;
+    overflow: hidden;
+}
+
+.panel.blue {
+    background: #7adfff;
+}
+
+.panel.green {
+    background: #c0ffa5;
+}
+
+/* Top row for corner buttons */
+.panel-top {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    right: 16px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 0 16px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 1100;
-}
-
-.nav-left {
-    display: flex;
     align-items: center;
-    gap: 8px;
 }
 
-.nav-logo {
-    height: 150px;
-    width: auto;
-}
-
-.nav-title {
-    font-family: 'Bernoru', sans-serif;
-    font-size: 90px;
-    font-weight: 600;
-    color: white;
-}
-
-
-.nav-signup-btn {
-    font-family: 'Bernoru', sans-serif;
-    font-size: 15px;
-    padding: 25px 10px;
-    border-radius: 35px;
-    text-decoration: none;
-    color: #ffffff;
-    background-color: #7ed957;
-}
-
-.nav-signup-btn:hover {
-    background-color: #07953d;
-}
-
-
-.controls {
-    position: fixed;
-    top: calc(50% + 35px);
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: 300px;
-    width: 700px;
-    z-index: 1500;
-    background: #00aee5;
-    padding: 8px 10px 40px;
-    font-family: sans-serif;
-    font-size: 13px;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-}
-
-.controls input {
-    width: 100%;
-    margin-bottom: 4px;
+/* Center content */
+.panel-center {
+    height: 100%;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 24px;
     box-sizing: border-box;
 }
 
-.nav-signup-btn {
-    font-family: sans-serif;
-    position: fixed;
-    top: calc(50% + 120px);
-    left: 50%;
-    transform: translate(-50%, -50%);
+.corner-btn-left {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 25px;
-    padding: 8px 17px;
-    border-radius: 20px;
     text-decoration: none;
-    color: #ffffff;
-    background-color: #7ed957;
-}
-
-.nav-signup-btn:hover {
-    background-color: #07953d;
-}
-
-.signup-close {
-    border: none;
-    background: transparent;
-    color: white;
-    font-size: 55px;
     cursor: pointer;
-    line-height: 1;
+    border: none;
+    background: #00aee5;
+    color: white;
+    padding: 10px 14px;
+    border-radius: 18px;
 }
 
-.signup-close:hover {
-    color: #e50000;
+.corner-btn-left:hover {
+    background: red;
+}
+
+.brand-logo {
+    width: 200px;
+    height: auto;
+    transform: translateX(-20px);
+}
+
+.brand-title {
+    font-family: "Bernoru", sans-serif;
+    font-size: 60px;
+    color: white;
+    transform: translateY(-80px);
+}
+
+.brand-tagline {
+    font-family: "Archivo Black", sans-serif;
+    font-size: 25px;
+    color: white;
+    transform: translateY(-140px);
+}
+
+/* Form on green side */
+.form {
+    width: min(420px, 90%);
 }
 
 .status {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    margin-top: 4px;
-    font-size: 20px;
-    color: #fdfbfb;
+    font-size: 14px;
+    color: white;
+    margin-bottom: 12px;
+    min-height: 18px;
 }
 
 .input-wrapper {
-    border: 2px solid #000;
-    position: relative;
-    position: relative;
-    top: 30px;
     display: flex;
     align-items: center;
-    background: #7ed957;
-    padding: 15px 20px;
-    margin-top: 18px;
+    background: #00aee5;
+    border-radius: 12px;
+    border: black;
+    border-style: solid;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    transform: translateY(-120px);
 }
 
 .input-wrapper input {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    color: white;
+    font-family: "Archivo Black", sans-serif;
+    width: 100%;
     border: none;
     outline: none;
-    width: 100%;
-    font-size: 20px;
-    padding: 6px 2px;
     background: transparent;
-    box-sizing: border-box;
+    color: white;
+    font-size: 16px;
 }
 
 .input-wrapper input::placeholder {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 22px;
     color: white;
-    text-align: center;
+}
+
+.signup-btn {
+    font-family: "Archivo Black", sans-serif;
+    width: 100%;
+    border: black;
+    border-style: solid;
+    cursor: pointer;
+    border-radius: 14px;
+    padding: 12px 16px;
+    font-size: 18px;
+    color: white;
+    background: #00aee5;
+    transform: translateY(-100px);
+}
+
+.signup-btn:hover {
+    background: #64d4f4;
+}
+
+#msg {
+    font-family: "Archivo Black", sans-serif;
+    color: #4ea429;
+}
+
+/* Mobile: stack panels */
+@media (max-width: 800px) {
+    .split {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
 }
