@@ -22,6 +22,7 @@
       <!-- <a href="/login" class="nav-login-btn">Log in</a> -->
     </div>
   </header>
+
   <div id="leftDock" class="left-dock">
     <div class="controls">
       <form id="routeForm">
@@ -58,21 +59,22 @@
       <ol id="routeSteps" class="route-steps"></ol>
     </section>
   </div>
+
   <aside id="historySidebar" class="sidebar">
     <button type="button" id="sidebarClose" class="sidebar-close">
       &times;
     </button>
     <h2 class="sidebar-title">History</h2>
-    <ul id="historyList" class="sidebar-list">
-    </ul>
+    <ul id="historyList" class="sidebar-list"></ul>
   </aside>
-  <div id="map"></div>
 
+  <div id="map"></div>
 
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <!-- Javascript file -->
-  <script src="script.js"></script>
+
+  <!-- App entry -->
+  <script type="module" src="js/main.js"></script>
 </body>
 
 </html>
