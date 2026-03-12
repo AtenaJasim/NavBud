@@ -16,6 +16,8 @@ NAVBUD helps you spot unprotected left turns along a driving route.
 You enter a starting point and a destination. The app builds a route on the map, then highlights left turns that don't have a stoplight. 
 The goal is to help drivers notice turns that may need extra caution.
 
+![NavBud Screenshot](./images/navbud.png)
+
 ## How it works
 
 1. You type a start and end address.
